@@ -45,7 +45,17 @@ function draw(object) {
     element.appendChild(topcard);
 
     let maincard = document.createElement("div");
-    maincard.innerHTML = card["number"];
+    if (card["number"] == 10) {
+      maincard.innerHTML = "J";
+    } else if (card["number"] == 11) {
+      maincard.innerHTML = "Q";
+    } else if (card["number"] == 12) {
+      maincard.innerHTML = "K";
+    } else if (card["number"] == 13) {
+      maincard.innerHTML = "A";
+    } else {
+      maincard.innerHTML = card["number"];
+    }
     element.appendChild(maincard);
 
     let bottomcard = document.createElement("div");
@@ -65,6 +75,22 @@ function draw(object) {
   }
 }
 
+function selectsortcards(arr) {
+  let min = 0;
+  while (min < arr.length - 1) {
+    for (let i = min + 1; i < arr.length; i++) {
+      if (Cards[min].number > Cards[i].number) {
+        let aux = Cards[min];
+        Cards[min] = Cards[i];
+        Cards[i] = aux;
+      }
+      ROW.innerHTML = "";
+      draw(Cards);
+    }
+    min++;
+  }
+}
+
 //EVENTOS
 
 FORM.addEventListener("submit", e => {
@@ -75,25 +101,9 @@ FORM.addEventListener("submit", e => {
     Cards.push(newcard());
   }
   draw(Cards);
-  console.log(Cards);
 });
 
 BTN.addEventListener("click", e => {
   e.preventDefault();
-  let min = 0;
-  while (min < Cards.length - 1) {
-    for (let i = min + 1; i < Cards.length; i++) {
-      if (Cards[min].number > Cards[i].number) {
-        let aux = Cards[min].number;
-        let typecard = Cards[min].pattern;
-        Cards[min].number = Cards[i].number;
-        Cards[min].pattern = Cards[i].pattern;
-        Cards[i].number = aux;
-        Cards[i].pattern = typecard;
-      }
-    }
-    min++;
-  }
-  ROW.innerHTML = "";
-  draw(Cards);
+  selectsortcards(Cards);
 });
