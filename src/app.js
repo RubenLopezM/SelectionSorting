@@ -83,9 +83,8 @@ function selectsortcards(arr) {
         let aux = Cards[min];
         Cards[min] = Cards[i];
         Cards[i] = aux;
+        draw(Cards);
       }
-      ROW.innerHTML = "";
-      draw(Cards);
     }
     min++;
   }
